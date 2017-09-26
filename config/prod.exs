@@ -58,13 +58,11 @@ config :logger, level: :info
 #     config :gigalixir_getting_started, GigalixirGettingStarted.Endpoint, server: true
 #
 config :gigalixir_getting_started, GigalixirGettingStarted.Endpoint,
-  server: true,
-  #secret_key_base: "${SECRET_KEY_BASE}"
+  server: true
 
 # Configure your database
 config :gigalixir_getting_started, GigalixirGettingStarted.Repo,
   adapter: Ecto.Adapters.Postgres,
-  #url: {:system, "DATABASE_URL"},
   url: System.get_env("DATABASE_URL"),
 
   # This is a huge hack. When DATABASE_URL is empty, postgrex crashes when it can not find :database here.
