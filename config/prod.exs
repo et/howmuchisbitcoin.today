@@ -13,8 +13,10 @@ use Mix.Config
 # which you typically run after static files are built.
 config :gigalixir_getting_started, GigalixirGettingStarted.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/manifest.json"
+  url: [host: "secret-thicket-72916.herokuapp.com", port: 80],
+  cache_static_manifest: "priv/static/manifest.json",
+  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE")
+
 
 # Do not print debug messages in production
 config :logger, level: :info
@@ -57,12 +59,13 @@ config :logger, level: :info
 #
 config :gigalixir_getting_started, GigalixirGettingStarted.Endpoint,
   server: true,
-  secret_key_base: "${SECRET_KEY_BASE}"
+  #secret_key_base: "${SECRET_KEY_BASE}"
 
 # Configure your database
 config :gigalixir_getting_started, GigalixirGettingStarted.Repo,
   adapter: Ecto.Adapters.Postgres,
-  url: {:system, "DATABASE_URL"},
+  #url: {:system, "DATABASE_URL"},
+  url: System.get_env("DATABASE_URL"),
 
   # This is a huge hack. When DATABASE_URL is empty, postgrex crashes when it can not find :database here.
   # This results in an infinite loop as postgrex gets restarted. This line stops it from crashing and instead
@@ -82,17 +85,17 @@ config :libcluster,
         #
         # We have two options:
         # 1. Use System.get_env
-        #    We know the selector at build time and we don't need to change it at 
+        #    We know the selector at build time and we don't need to change it at
         #    run time so System.get_env is sufficient for now.
         # 2. Use REPLACE_OS_VARS
         #    The config in this file gets turned into an erlang sys.config file.
-        #    Distillery's boot.eex will replace os vars in sys.config if 
+        #    Distillery's boot.eex will replace os vars in sys.config if
         #    REPLACE_OS_VARS=true. This method only works with strings so it will
         #    fail if the config requires an integer.
         #
         # We chose option 2 because setting up env vars at compile time is not strictly
         # necessary and avoiding it reduces complexity. We need runtime env vars anyway and
-        # this is the more standard way of doing it. See 
+        # this is the more standard way of doing it. See
         # http://sgeos.github.io/phoenix/elixir/erlang/ecto/exrm/postgresql/mysql/2016/09/11/storing-elixir-release-configuration-in-environment-variables.html
         kubernetes_selector: "${LIBCLUSTER_KUBERNETES_SELECTOR}",
         kubernetes_node_basename: "${LIBCLUSTER_KUBERNETES_NODE_BASENAME}"]]]
