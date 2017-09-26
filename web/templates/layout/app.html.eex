@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name=”description” content="The most up to date price of Bitcoin.">
   <title>What's the price of Bitcoin?</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css">
@@ -16,6 +17,10 @@
           <h1 class="title">
             <%= render @view_module, @view_template, assigns %>
           </h1>
+
+          <h2>
+            <a href="https://www.coinbase.com/join/57c4dc74a0a89800962906e0">Buy Bitcoin with Coinbase</a>
+          </h2>
         </div>
       </div>
     </section>
